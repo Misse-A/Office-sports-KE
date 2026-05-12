@@ -9,7 +9,7 @@
     <!-- Favicon -->
     <link rel="icon" href="https://misse-a.github.io/Office-sports-KE/icon.png" type="image/png">
     
-    <!-- Inter Font (Assumed intended font for 'Intel') -->
+    <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -141,7 +141,6 @@
         <div style="font-size: 50px; color: var(--accent);">✔</div>
         <h3>Success!</h3>
         <p>Data recorded successfully.</p>
-        <!-- Updated Success Message line with Logo -->
         <div style="margin-top: 20px; font-size: 14px; color: #475569; display: flex; flex-direction: column; align-items: center; gap: 8px;">
             Remember to record on
             <img src="https://misse-a.github.io/Office-sports-KE/Logo_inline_purple.svg" alt="United Heroes" style="max-height: 25px;">
@@ -150,25 +149,19 @@
 </div>
 
 <div class="layout-wrapper">
-    <!-- Left Side Content -->
     <div class="brand-side">
-        <!-- White Logo (Hidden on mobile) -->
         <img src="https://misse-a.github.io/Office-sports-KE/white.svg" alt="Decathlon Logo" class="brand-logo-white">
         <div class="brand-text">Bring people <strong>together</strong> through sport to make <em>wellbeing</em> accessible for <strong>all</strong><br><br>#zoeazoezi</div>
     </div>
 
-    <!-- Right Side Content -->
     <div class="content-side">
-        <!-- Blue Logo (Visible ONLY on mobile, right above the content) -->
         <img src="https://misse-a.github.io/Office-sports-KE/blue.svg" alt="Decathlon Logo" class="mobile-logo">
 
-        <!-- Title and Flag -->
         <div class="content-header">
             <h1>Service Tournament</h1>
             <img src="https://misse-a.github.io/Office-sports-KE/kenya.svg" alt="Kenya Flag" class="flag-icon">
         </div>
 
-        <!-- Updated Menu -->
         <div class="nav-menu">
             <div class="nav-item active" id="btn-record" onclick="showView('record')">Record Scores</div>
             <div class="nav-item" id="btn-points" onclick="showView('points')">Ranking</div>
@@ -257,7 +250,6 @@
             </div>
         </div>
 
-        <!-- Added FAQs view to support the new menu tab -->
         <div id="view-faqs" class="view-container hidden">
             <div class="leaderboard-card" style="padding: 30px; background: #fff;">
                 <h3 style="margin-top:0;">Frequently Asked Questions</h3>
@@ -269,56 +261,51 @@
 </div>
 
 <script>
-    // IMPORTANT: REPLACE THIS URL WITH YOUR DEPLOYED WEB APP URL
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxEY3jIxMuEbsZRfOjllMt2GPEwDxAfP9iKruGcceJPxDpt8IYCKU3-uMZRI7Z05phwfw/exec"; 
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDBTpQlMpXXzHR5MwP2c2nSgy2jrB6AW7p8BJEGXXiwtT6baGGGNNzIX4dCNcPbr1b_w/exec"; 
     const players = ["Michael", "Samson", "Martha", "Adele"];
     
     function showView(viewName) {
         document.getElementById('view-record').classList.toggle('hidden', viewName !== 'record');
         document.getElementById('view-points').classList.toggle('hidden', viewName !== 'points');
-        document.getElementById('view-faqs').classList.toggle('hidden', viewName !== 'faqs'); // Added FAQ toggle logic
+        document.getElementById('view-faqs').classList.toggle('hidden', viewName !== 'faqs');
         
         document.getElementById('btn-record').classList.toggle('active', viewName === 'record');
         document.getElementById('btn-points').classList.toggle('active', viewName === 'points');
-        document.getElementById('btn-faqs').classList.toggle('active', viewName === 'faqs'); // Added FAQ toggle logic
+        document.getElementById('btn-faqs').classList.toggle('active', viewName === 'faqs');
         
         if(viewName === 'points') fetchLeaderboard();
     }
 
     /**
-     * UPDATED: Uses google.script.run to bypass CORS/Redirection issues
+     * FIX: Uses standard fetch() to get leaderboard data, bypassing the need for google.script.run
      */
-    function fetchLeaderboard() {
+    async function fetchLeaderboard() {
         const body = document.getElementById('leaderboardBody');
         body.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px;">Fetching rankings...</td></tr>';
         
-        if (typeof google === 'undefined') {
-            body.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">Not running in App Script environment.</td></tr>';
-            return;
-        }
+        try {
+            // Append a query parameter so your Apps Script knows it's a read request
+            const response = await fetch(APPS_SCRIPT_URL + "?action=getLeaderboard");
+            const res = await response.json();
 
-        google.script.run
-            .withSuccessHandler(function(res) {
-                if(res.status === "success") {
-                    if (res.data.length === 0) {
-                        body.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px;">No data recorded yet.</td></tr>';
-                        return;
-                    }
-                    body.innerHTML = res.data.map((row, i) => `
-                        <tr>
-                            <td><span class="rank-circle ${i==0?'gold':i==1?'silver':i==2?'bronze':''}">${i+1}</span></td>
-                            <td><strong>${row.name}</strong></td>
-                            <td>${row.points}</td>
-                            <td>${row.matches}</td>
-                        </tr>`).join('');
-                } else {
-                    body.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">' + res.message + '</td></tr>';
+            if (res.status === "success") {
+                if (!res.data || res.data.length === 0) {
+                    body.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px;">No data recorded yet.</td></tr>';
+                    return;
                 }
-            })
-            .withFailureHandler(function(err) {
-                body.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">Server Error: ' + err + '</td></tr>';
-            })
-            .getLeaderboardData();
+                body.innerHTML = res.data.map((row, i) => `
+                    <tr>
+                        <td><span class="rank-circle ${i==0?'gold':i==1?'silver':i==2?'bronze':''}">${i+1}</span></td>
+                        <td><strong>${row.name}</strong></td>
+                        <td>${row.points}</td>
+                        <td>${row.matches}</td>
+                    </tr>`).join('');
+            } else {
+                body.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">' + (res.message || "Unknown Error") + '</td></tr>';
+            }
+        } catch (err) {
+            body.innerHTML = `<tr><td colspan="4" style="text-align:center; color:red;">Server Error: Ensure your Apps Script 'doGet' function is set up and returning JSON. (${err.message})</td></tr>`;
+        }
     }
 
     // Initialization Logic
