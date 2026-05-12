@@ -1,96 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Service Team Tournament | Decathlo Kenya</title>
-<style>
-    :root { 
-        --primary: #3643ba; 
-        --bg-light: #f8fafc; 
-        --border: #cbd5e1;
-        --text-dark: #1e293b;
-    }
-    
-    body { 
-        margin: 0;
-        font-family: 'Helvetica Neue', Arial, sans-serif; 
-        background-color: var(--bg-light); 
-        color: var(--text-dark);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Tournament Tracker</title>
+    <style>
+        :root { 
+            --primary: #3643ba; 
+            --bg-light: #f8fafc; 
+            --border: #cbd5e1;
+            --text-dark: #1e293b;
+            --accent: #10b981;
+        }
+        
+        body { margin: 0; font-family: 'Helvetica Neue', Arial, sans-serif; background-color: var(--bg-light); color: var(--text-dark); }
+        .layout-wrapper { display: flex; min-height: 100vh; width: 100%; }
 
-    /* Split Screen Layout */
-    .layout-wrapper {
-        display: flex;
-        min-height: 100vh;
-        width: 100%;
-    }
+        .brand-side {
+            background-color: var(--primary); width: 40%; padding: 40px; 
+            display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; color: white; text-align: center; 
+            position: fixed; height: 100vh; box-sizing: border-box;
+        }
+        .brand-logo { max-width: 220px; margin-bottom: 40px; }
+        .brand-text { font-size: 1.8rem; font-weight: 300; max-width: 350px; line-height: 1.4; }
 
-    .brand-side {
-        background-color: var(--primary);
-        width: 50%;
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-    }
+        .content-side { 
+            margin-left: 40%; width: 60%; background-color: white; 
+            min-height: 100vh; padding: 60px 40px; box-sizing: border-box; 
+        }
 
-    .brand-logo { max-width: 250px; margin-bottom: 40px; z-index: 2; }
-    .brand-text { font-size: 2.2rem; line-height: 1.3; font-weight: 300; max-width: 400px; z-index: 2; }
-    .brand-text strong { font-weight: 700; }
+        .nav-menu { display: flex; gap: 30px; border-bottom: 2px solid #f1f5f9; margin-bottom: 40px; }
+        .nav-item { 
+            padding-bottom: 12px; cursor: pointer; font-weight: bold; 
+            color: #94a3b8; border-bottom: 3px solid transparent; transition: 0.3s;
+        }
+        .nav-item.active { color: var(--primary); border-bottom-color: var(--primary); }
 
-    .form-side {
-        width: 50%;
-        background-color: white;
-        padding: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        overflow-y: auto;
-    }
+        .view-container { max-width: 500px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; color: #475569; }
+        
+        select, input { 
+            width: 100%; padding: 12px; border: 1px solid var(--border); 
+            border-radius: 6px; box-sizing: border-box; font-size: 15px;
+            background-color: var(--bg-light);
+        }
 
-    .form-container { width: 100%; max-width: 450px; margin-top: 4vh; }
-    .mobile-logo { display: none; }
+        .match-setup { 
+            display: grid; grid-template-columns: 1fr auto 1fr; gap: 15px; 
+            align-items: center; background: var(--bg-light); padding: 20px; 
+            border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px;
+        }
+        .vs-badge { font-weight: bold; color: var(--primary); font-size: 1.1rem; }
+        .btn-primary { 
+            background: var(--primary); color: white; border: none; padding: 14px; 
+            border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; 
+        }
+        
+        .spacer { margin-top: 10px; }
+        .hidden { display: none !important; }
 
-    .form-title { font-size: 1.8rem; font-weight: bold; margin-bottom: 30px; color: var(--text-dark); }
-    .form-group { margin-bottom: 20px; }
-    label { display: block; font-weight: 500; margin-bottom: 8px; font-size: 14px; color: #475569; }
+        .leaderboard-card { width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid #f1f5f9; }
+        .rank-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .rank-table th { background: #f8fafc; padding: 16px; color: #64748b; font-size: 12px; text-transform: uppercase; }
+        .rank-table td { padding: 16px; border-top: 1px solid #f1f5f9; }
+        
+        .rank-circle { 
+            display: inline-block; width: 28px; height: 28px; line-height: 28px; 
+            text-align: center; border-radius: 50%; background: #e2e8f0; font-weight: bold; font-size: 12px;
+        }
+        .gold { background: #fef3c7; color: #d97706; }
+        .silver { background: #f1f5f9; color: #475569; }
+        .bronze { background: #ffedd5; color: #9a3412; }
 
-    select, input[type="number"], input[type="file"] { 
-        width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 15px; background-color: var(--bg-light); transition: border-color 0.2s;
-    }
-    select:focus, input[type="number"]:focus { outline: none; border-color: var(--primary); }
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.95); z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    .match-setup { display: grid; grid-template-columns: 1fr auto 1fr; gap: 15px; align-items: center; background: var(--bg-light); padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border); }
-    .vs-badge { font-weight: bold; color: var(--primary); font-size: 1.2rem; }
-    
-    .btn-primary { background-color: var(--primary); color: white; border: none; padding: 14px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; font-size: 16px; margin-top: 10px; transition: background-color 0.2s; }
-    .btn-secondary { background-color: white; color: var(--primary); border: 1px solid var(--primary); padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 14px; width: auto; margin-bottom: 10px; font-weight: bold; }
-    .btn-primary:hover { background-color: #2a3492; }
-    .btn-secondary:hover { background-color: #f1f5f9; }
-    
-    .hidden { display: none !important; }
-    .error { color: #ef4444; font-size: 12px; margin-top: 5px; display: block; }
-    .spacer { margin-top: 10px; }
-
-    /* Mobile Responsiveness */
-    @media (max-width: 900px) {
-        .layout-wrapper { flex-direction: column; }
-        .form-side { width: 100%; padding: 30px 20px; order: 1; }
-        .brand-side { width: 100%; padding: 40px 20px; min-height: 300px; order: 2; }
-        .brand-text { font-size: 1.8rem; }
-        .form-container { margin-top: 0; }
-        .brand-logo { display: none; }
-        .mobile-logo { display: block; max-width: 200px; margin: 0 0 30px 0; }
-    }
-</style>
+        @media (max-width: 900px) {
+            .layout-wrapper { flex-direction: column; }
+            .brand-side { width: 100%; height: auto; position: relative; padding: 40px 20px; }
+            .content-side { width: 100%; margin-left: 0; padding: 30px 20px; }
+        }
+    </style>
 </head>
 <body>
+
+<div id="statusOverlay" class="overlay hidden">
+    <div id="loadingState">
+        <div class="spinner"></div>
+        <h3 style="margin-top:20px">Processing...</h3>
+    </div>
+    <div id="successState" class="hidden">
+        <div style="font-size: 50px; color: var(--accent);">✔</div>
+        <h3>Success!</h3>
+        <p>Data recorded successfully.</p>
+    </div>
+</div>
 
 <div class="layout-wrapper">
     <div class="brand-side">
@@ -98,16 +109,19 @@
         <div class="brand-text">Bring people <strong>together</strong> through sport to make <em>wellbeing</em> accessible for <strong>all</strong></div>
     </div>
 
-    <div class="form-side">
-        <div class="form-container">
-            <img src="https://contents.mediadecathlon.com/b101212/k$a94f45fac8993f18e72bbb5fff402b9d/defaut.svg?format=auto" alt="Decathlon Logo" class="mobile-logo">
-            <h2 class="form-title">Record Match Data</h2>
-            
+    <div class="content-side">
+        <div class="nav-menu">
+            <div class="nav-item active" id="btn-record" onclick="showView('record')">Record Data</div>
+            <div class="nav-item" id="btn-points" onclick="showView('points')">View Points</div>
+        </div>
+
+        <div id="view-record" class="view-container">
+            <h2>Enter Match Results</h2>
             <form id="tournamentForm">
                 <div class="form-group">
                     <label>Sport</label>
-                    <select id="sport" required>
-                        <option value="">Select a Sport...</option>
+                    <select id="sport" required onchange="updateUI()">
+                        <option value="">Select Sport...</option>
                         <option value="Pickleball">Pickleball</option>
                         <option value="Padel">Padel</option>
                         <option value="Running">Running</option>
@@ -125,22 +139,21 @@
                 </div>
 
                 <div class="form-group hidden" id="typeGroup">
-                    <label>Type</label>
-                    <select id="matchType" required></select>
+                    <label>Match Type</label>
+                    <select id="matchType" required onchange="handleTypeChange()"></select>
                 </div>
 
                 <div class="form-group hidden" id="distanceGroup">
                     <label>Distance (KM)</label>
                     <input type="number" id="distance" step="0.1" min="5">
-                    <span class="error hidden" id="distanceError">Distance must be at least 5km.</span>
+                    <span id="distanceError" class="hidden" style="color:red; font-size:12px;">Minimum 5km required.</span>
                 </div>
 
                 <div class="match-setup hidden" id="competitiveLayout">
                     <div>
                         <label>Team 1</label>
                         <select class="player-select comp-select" id="p1"></select>
-                        <div class="spacer"></div>
-                        <select class="player-select comp-select hidden" id="p2"></select>
+                        <select class="player-select comp-select hidden spacer" id="p2"></select>
                         <label class="spacer">Score</label>
                         <input type="number" id="score1" min="0">
                     </div>
@@ -148,8 +161,7 @@
                     <div>
                         <label>Team 2</label>
                         <select class="player-select comp-select" id="p3"></select>
-                        <div class="spacer"></div>
-                        <select class="player-select comp-select hidden" id="p4"></select>
+                        <select class="player-select comp-select hidden spacer" id="p4"></select>
                         <label class="spacer">Score</label>
                         <input type="number" id="score2" min="0">
                     </div>
@@ -158,235 +170,232 @@
                 <div class="form-group hidden" id="groupLayout">
                     <label>Participants</label>
                     <div id="dynamicPlayerContainer"></div>
-                    <button type="button" class="btn-secondary hidden" id="addPlayerBtn">+ Add Player</button>
+                    <button type="button" id="addPlayerBtn" style="background:none; border:1px solid var(--primary); color:var(--primary); padding:8px 12px; border-radius:4px; cursor:pointer; font-weight:bold; margin-top:10px">+ Add Player</button>
                 </div>
 
                 <div class="form-group">
-                    <label>Picture 1 (JPG/PNG)</label>
-                    <input type="file" id="pic1" accept=".jpg, .jpeg, .png">
-                </div>
-                <div class="form-group">
-                    <label>Picture 2 (JPG/PNG)</label>
-                    <input type="file" id="pic2" accept=".jpg, .jpeg, .png">
+                    <label>Action Photo</label>
+                    <input type="file" id="pic1" accept="image/*">
                 </div>
 
-                <button type="submit" class="btn-primary" id="submitBtn">Submit Data</button>
+                <div class="form-group" style="margin-top: 40px; border-top: 1px solid #eee; padding-top:20px;">
+                    <label>Recorded By (Your Name)</label>
+                    <select id="recordedBy" required></select>
+                </div>
+
+                <button type="submit" class="btn-primary">Submit Result</button>
             </form>
+        </div>
+
+        <div id="view-points" class="view-container hidden" style="max-width: 100%;">
+            <h2>Leaderboard Rankings</h2>
+            <div class="leaderboard-card">
+                <table class="rank-table">
+                    <thead>
+                        <tr><th>Rank</th><th>Name</th><th>Points</th><th>Matches</th></tr>
+                    </thead>
+                    <tbody id="leaderboardBody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // --- GOOGLE APPS SCRIPT URL ---
-    // PASTE THE URL YOU COPIED FROM STEP 3 HERE:
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbycUTwjQKYDRlVENfEK3J8KbSZIxw3wUpniRoMzlp8Tz6QJAT8XuzBCchgI-jQpUdMGzg/exec"; 
-
+    // IMPORTANT: REPLACE THIS URL WITH YOUR DEPLOYED WEB APP URL
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxEY3jIxMuEbsZRfOjllMt2GPEwDxAfP9iKruGcceJPxDpt8IYCKU3-uMZRI7Z05phwfw/exec"; 
     const players = ["Michael", "Samson", "Martha", "Adele"];
-    const sportEl = document.getElementById('sport');
-    const typeEl = document.getElementById('matchType');
-    let groupPlayerCount = 0;
     
-    function populateSelect(selectEl) {
-        selectEl.innerHTML = '<option value="">Select Player...</option>';
-        players.forEach(p => selectEl.innerHTML += `<option value="${p}">${p}</option>`);
-        selectEl.addEventListener('change', updatePlayerOptions);
+    function showView(viewName) {
+        document.getElementById('view-record').classList.toggle('hidden', viewName !== 'record');
+        document.getElementById('view-points').classList.toggle('hidden', viewName !== 'points');
+        document.getElementById('btn-record').classList.toggle('active', viewName === 'record');
+        document.getElementById('btn-points').classList.toggle('active', viewName === 'points');
+        if(viewName === 'points') fetchLeaderboard();
     }
 
-    document.querySelectorAll('.comp-select').forEach(populateSelect);
+    /**
+     * UPDATED: Uses google.script.run to bypass CORS/Redirection issues
+     */
+    function fetchLeaderboard() {
+        const body = document.getElementById('leaderboardBody');
+        body.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px;">Fetching rankings...</td></tr>';
+        
+        if (typeof google === 'undefined') {
+            body.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">Not running in App Script environment.</td></tr>';
+            return;
+        }
 
-    function addGroupPlayer() {
-        groupPlayerCount++;
-        const select = document.createElement('select');
-        select.className = 'player-select group-select';
-        select.id = `g${groupPlayerCount}`;
-        select.style.marginBottom = '10px';
-        populateSelect(select);
-        document.getElementById('dynamicPlayerContainer').appendChild(select);
-        updatePlayerOptions();
+        google.script.run
+            .withSuccessHandler(function(res) {
+                if(res.status === "success") {
+                    if (res.data.length === 0) {
+                        body.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px;">No data recorded yet.</td></tr>';
+                        return;
+                    }
+                    body.innerHTML = res.data.map((row, i) => `
+                        <tr>
+                            <td><span class="rank-circle ${i==0?'gold':i==1?'silver':i==2?'bronze':''}">${i+1}</span></td>
+                            <td><strong>${row.name}</strong></td>
+                            <td>${row.points}</td>
+                            <td>${row.matches}</td>
+                        </tr>`).join('');
+                } else {
+                    body.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">' + res.message + '</td></tr>';
+                }
+            })
+            .withFailureHandler(function(err) {
+                body.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">Server Error: ' + err + '</td></tr>';
+            })
+            .getLeaderboardData();
     }
 
-    document.getElementById('addPlayerBtn').addEventListener('click', addGroupPlayer);
+    // Initialization Logic
+    const initSelect = (sel) => {
+        sel.innerHTML = '<option value="">Select Player...</option>' + players.map(p => `<option value="${p}">${p}</option>`).join('');
+        sel.addEventListener('change', updatePlayerOptions);
+    };
+
+    document.getElementById('recordedBy').innerHTML = '<option value="" disabled selected>Select name...</option>' + players.map(p => `<option value="${p}">${p}</option>`).join('');
+    document.querySelectorAll('.comp-select').forEach(initSelect);
 
     function updatePlayerOptions() {
-        const allSelects = Array.from(document.querySelectorAll('.player-select'));
-        const selectedValues = allSelects.map(s => s.value).filter(v => v);
-        
-        allSelects.forEach(select => {
-            Array.from(select.options).forEach(opt => {
-                opt.disabled = opt.value && selectedValues.includes(opt.value) && select.value !== opt.value;
+        const allPlayerSelects = Array.from(document.querySelectorAll('.player-select:not(#recordedBy)'));
+        const selectedValues = allPlayerSelects.map(s => s.value).filter(v => v !== "");
+        allPlayerSelects.forEach(select => {
+            const currentVal = select.value;
+            Array.from(select.options).forEach(option => {
+                if (option.value === "") return;
+                option.disabled = selectedValues.includes(option.value) && option.value !== currentVal;
             });
         });
     }
 
     function updateUI() {
-        const sport = sportEl.value;
-        document.getElementById('typeGroup').classList.remove('hidden');
-        if (!sport) return document.getElementById('typeGroup').classList.add('hidden');
+        const s = document.getElementById('sport').value;
+        const typeEl = document.getElementById('matchType');
+        document.getElementById('typeGroup').classList.toggle('hidden', !s);
+        if(!s) return;
 
-        if (sport === 'Pickleball') typeEl.innerHTML = '<option value="Singles">Singles</option><option value="Doubles">Doubles</option>';
-        else if (sport === 'Padel') typeEl.innerHTML = '<option value="Doubles">Doubles</option>';
-        else typeEl.innerHTML = '<option value="Individual">Individual</option><option value="Group">Group</option>';
-        
+        if (s === 'Pickleball' || s === 'Padel') {
+            typeEl.innerHTML = '<option value="Singles">Singles</option><option value="Doubles">Doubles</option>';
+            if(s === 'Padel') typeEl.innerHTML = '<option value="Doubles">Doubles</option>';
+        } else {
+            typeEl.innerHTML = '<option value="Individual">Individual</option><option value="Group">Group</option>';
+        }
         handleTypeChange();
     }
 
     function handleTypeChange() {
-        const sport = sportEl.value;
-        const type = typeEl.value;
-        const compLayout = document.getElementById('competitiveLayout');
-        const groupLayout = document.getElementById('groupLayout');
-        const distGroup = document.getElementById('distanceGroup');
+        const s = document.getElementById('sport').value, t = document.getElementById('matchType').value;
+        const comp = document.getElementById('competitiveLayout'), grp = document.getElementById('groupLayout'), dist = document.getElementById('distanceGroup');
         const addBtn = document.getElementById('addPlayerBtn');
-
-        compLayout.classList.add('hidden');
-        groupLayout.classList.add('hidden');
-        distGroup.classList.add('hidden');
-        document.getElementById('dynamicPlayerContainer').innerHTML = '';
-        groupPlayerCount = 0;
-
-        if (sport === 'Running' || sport === 'Cycling') distGroup.classList.remove('hidden');
-
-        if (sport === 'Pickleball' || sport === 'Padel') {
-            compLayout.classList.remove('hidden');
-            document.getElementById('p2').classList.toggle('hidden', type === 'Singles');
-            document.getElementById('p4').classList.toggle('hidden', type === 'Singles');
-            document.getElementById('score1').required = true;
-            document.getElementById('score2').required = true;
-            addBtn.classList.add('hidden'); 
-        } else {
-            groupLayout.classList.remove('hidden');
-            document.getElementById('score1').required = false;
-            document.getElementById('score2').required = false;
-            let initialInputs = type === 'Individual' ? 1 : 3;
-            for(let i=0; i<initialInputs; i++) addGroupPlayer();
-            if (type === 'Group') addBtn.classList.remove('hidden');
-            else addBtn.classList.add('hidden');
-        }
         
-        document.querySelectorAll('.player-select').forEach(s => s.value = '');
+        comp.classList.add('hidden'); grp.classList.add('hidden'); dist.classList.add('hidden');
+        document.getElementById('dynamicPlayerContainer').innerHTML = '';
+
+        if (s === 'Running' || s === 'Cycling') dist.classList.remove('hidden');
+        
+        if (s === 'Pickleball' || s === 'Padel') {
+            comp.classList.remove('hidden');
+            document.getElementById('p2').classList.toggle('hidden', t === 'Singles');
+            document.getElementById('p4').classList.toggle('hidden', t === 'Singles');
+            addBtn.classList.add('hidden');
+        } else {
+            grp.classList.remove('hidden');
+            addBtn.classList.toggle('hidden', t !== 'Group');
+            let initial = (t === 'Individual' ? 1 : 3);
+            for(let i=0; i<initial; i++) addGroupPlayer();
+        }
         updatePlayerOptions();
     }
 
-    sportEl.addEventListener('change', updateUI);
-    typeEl.addEventListener('change', handleTypeChange);
+    function addGroupPlayer() {
+        const sel = document.createElement('select'); 
+        sel.className = 'player-select group-select spacer'; 
+        initSelect(sel);
+        document.getElementById('dynamicPlayerContainer').appendChild(sel);
+        updatePlayerOptions();
+    }
+    document.getElementById('addPlayerBtn').onclick = addGroupPlayer;
 
-    // Helper Function to convert Image to Base64 String
-    function getBase64(file) {
-        return new Promise((resolve, reject) => {
-            if (!file) return resolve("");
+    async function getBase64(file) {
+        if (!file) return "";
+        return new Promise((resolve) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
         });
     }
 
-    document.getElementById('tournamentForm').addEventListener('submit', async function(e) {
+    document.getElementById('tournamentForm').onsubmit = async (e) => {
         e.preventDefault();
+        const s = document.getElementById('sport').value, t = document.getElementById('matchType').value, dVal = document.getElementById('distance').value;
         
-        const sport = sportEl.value;
-        const type = typeEl.value;
-        const distance = document.getElementById('distance').value;
-        const submitBtn = document.getElementById('submitBtn');
-
-        if ((sport === 'Running' || sport === 'Cycling') && distance < 5) {
+        if ((s === 'Running' || s === 'Cycling') && dVal < 5) {
             document.getElementById('distanceError').classList.remove('hidden');
             return;
         }
 
-        submitBtn.innerText = "Uploading to Drive & Sheets...";
-        submitBtn.disabled = true;
-
-        const now = new Date();
-        const formattedDate = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ' ' + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-
-        // Build Payload Object (Instead of FormData)
+        const overlay = document.getElementById('statusOverlay');
+        overlay.classList.remove('hidden');
+        
         let payload = {
-            Date: formattedDate,
-            RecordedBy: "user@office.com", 
-            Sport: sport,
-            Type: type,
-            DistanceKM: distance || "",
+            Date: new Date().toLocaleString('en-GB'),
+            RecordedBy: document.getElementById('recordedBy').value,
+            Sport: s,
+            Type: t,
+            DistanceKM: dVal,
             Player1: "", Player2: "", Player3: "", Player4: "",
-            ScoreTeam1: "", ScoreTeam2: ""
+            ScoreTeam1: document.getElementById('score1').value || 0,
+            ScoreTeam2: document.getElementById('score2').value || 0,
+            PointsDistributed: ""
         };
 
-        let pointsData = {};
-        let additionalPlayers = [];
-
-        if (sport === 'Pickleball' || sport === 'Padel') {
-            const s1 = parseInt(document.getElementById('score1').value);
-            const s2 = parseInt(document.getElementById('score2').value);
-            payload.ScoreTeam1 = s1;
-            payload.ScoreTeam2 = s2;
-            
+        let pts = {};
+        if (s === 'Pickleball' || s === 'Padel') {
             payload.Player1 = document.getElementById('p1').value;
             payload.Player3 = document.getElementById('p3').value;
-            
-            let w = type === 'Doubles' ? 6 : 3;
-            let l = type === 'Doubles' ? 2 : 1;
-            let p1Pts = s1 > s2 ? w : (s1 < s2 ? l : 0);
-            let p2Pts = s2 > s1 ? w : (s2 < s1 ? l : 0);
-
-            if(payload.Player1) pointsData[payload.Player1] = p1Pts;
-            if(payload.Player3) pointsData[payload.Player3] = p2Pts;
-            
-            if (type === 'Doubles') {
+            let s1 = parseInt(payload.ScoreTeam1), s2 = parseInt(payload.ScoreTeam2);
+            let win = (t === 'Doubles' ? 6 : 3), lose = (t === 'Doubles' ? 2 : 1);
+            pts[payload.Player1] = s1 > s2 ? win : lose;
+            pts[payload.Player3] = s2 > s1 ? win : lose;
+            if(t === 'Doubles') {
                 payload.Player2 = document.getElementById('p2').value;
                 payload.Player4 = document.getElementById('p4').value;
-                if(payload.Player2) pointsData[payload.Player2] = p1Pts;
-                if(payload.Player4) pointsData[payload.Player4] = p2Pts;
+                pts[payload.Player2] = pts[payload.Player1];
+                pts[payload.Player4] = pts[payload.Player3];
             }
         } else {
-            let pts = (sport === 'Running' || sport === 'Cycling') ? (type === 'Individual' ? 2 : 4) : (type === 'Individual' ? 2 : 3);
-            
-            const groupSelects = Array.from(document.querySelectorAll('.group-select')).filter(s => s.value);
-            groupSelects.forEach((select, index) => {
-                pointsData[select.value] = pts;
-                if (index === 0) payload.Player1 = select.value;
-                else if (index === 1) payload.Player2 = select.value;
-                else if (index === 2) payload.Player3 = select.value;
-                else if (index === 3) payload.Player4 = select.value;
-                else additionalPlayers.push(select.value);
+            const sels = Array.from(document.querySelectorAll('.group-select')).filter(el => el.value);
+            let pVal = (s === 'Running' || s === 'Cycling') ? (t === 'Individual' ? 2 : 4) : (t === 'Individual' ? 2 : 3);
+            sels.forEach((sel, i) => {
+                pts[sel.value] = pVal;
+                if(i===0) payload.Player1 = sel.value;
+                else if(i===1) payload.Player2 = sel.value;
+                else if(i===2) payload.Player3 = sel.value;
+                else if(i===3) payload.Player4 = sel.value;
             });
         }
 
-        payload.AdditionalPlayers = additionalPlayers.join(", ");
-        payload.PointsDistributed = Object.entries(pointsData).map(([name, pts]) => `${name}: ${pts}`).join(" | ");
+        payload.PointsDistributed = Object.entries(pts).map(([n, p]) => `${n}: ${p}`).join(" | ");
+        payload.picture1Base64 = await getBase64(document.getElementById('pic1').files[0]);
 
-        // Convert Images to Base64
-        const pic1File = document.getElementById('pic1').files[0];
-        const pic2File = document.getElementById('pic2').files[0];
-        
-        payload.picture1Base64 = await getBase64(pic1File);
-        payload.picture2Base64 = await getBase64(pic2File);
-
-        // Send to Google Apps Script
         try {
-            // Using text/plain to avoid strict CORS preflight issues with GAS
-            const response = await fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
-                body: JSON.stringify(payload)
-            });
-            
+            const response = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
             const result = await response.json();
-            
             if(result.status === "success") {
-                alert('Success! Data saved to Google Sheets and Images uploaded to Drive.');
-                document.getElementById('tournamentForm').reset();
-                updateUI(); 
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('successState').classList.remove('hidden');
+                setTimeout(() => { location.reload(); }, 3000); 
             } else {
-                throw new Error(result.message || "Unknown server error");
+                throw new Error(result.message);
             }
-        } catch (error) {
-            alert('Error submitting data. Check your App Script logs.');
-            console.error(error);
+        } catch (err) { 
+            alert("Error: " + err.message); 
+            overlay.classList.add('hidden'); 
         }
-
-        submitBtn.innerText = "Submit Data";
-        submitBtn.disabled = false;
-    });
+    };
 </script>
 </body>
 </html>
