@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lets play sports together and be active. Team #zoea zoezi.">
     <title>Office Tournament | Decathlon Service Team</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://misse-a.github.io/Office-sports-KE/DECATHLON logo core symbol blue rgb --- Expires on 31-12-2100.png" type="image/png">
+    
+    <!-- Inter Font (Assumed intended font for 'Intel') -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root { 
             --primary: #3643ba; 
@@ -13,23 +23,49 @@
             --accent: #10b981;
         }
         
-        body { margin: 0; font-family: 'Helvetica Neue', Arial, sans-serif; background-color: var(--bg-light); color: var(--text-dark); }
+        body { 
+            margin: 0; 
+            font-family: 'Inter', Arial, sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-dark); 
+        }
+        
         .layout-wrapper { display: flex; min-height: 100vh; width: 100%; }
 
+        /* Left Side: Exactly 50% */
         .brand-side {
-            background-color: var(--primary); width: 40%; padding: 40px; 
+            background-color: var(--primary); 
+            width: 50%; 
+            padding: 40px; 
             display: flex; flex-direction: column; justify-content: center; 
             align-items: center; color: white; text-align: center; 
             position: fixed; height: 100vh; box-sizing: border-box;
         }
-        .brand-logo { max-width: 220px; margin-bottom: 40px; }
+        .brand-logo-white { max-width: 250px; margin-bottom: 40px; }
         .brand-text { font-size: 1.8rem; font-weight: 300; max-width: 350px; line-height: 1.4; }
 
+        /* Right Side: Exactly 50% */
         .content-side { 
-            margin-left: 40%; width: 60%; background-color: white; 
-            min-height: 100vh; padding: 60px 40px; box-sizing: border-box; 
+            margin-left: 50%; 
+            width: 50%; 
+            background-color: white; 
+            min-height: 100vh; 
+            padding: 60px 40px; 
+            box-sizing: border-box; 
         }
 
+        .mobile-logo { display: none; } /* Hidden on desktop */
+
+        /* Header Area with Flag */
+        .content-header {
+            display: flex; align-items: center; gap: 15px; margin-bottom: 25px;
+        }
+        .content-header h1 {
+            margin: 0; font-size: 28px; color: var(--text-dark);
+        }
+        .flag-icon { width: 35px; height: auto; }
+
+        /* Navigation */
         .nav-menu { display: flex; gap: 30px; border-bottom: 2px solid #f1f5f9; margin-bottom: 40px; }
         .nav-item { 
             padding-bottom: 12px; cursor: pointer; font-weight: bold; 
@@ -44,7 +80,7 @@
         select, input { 
             width: 100%; padding: 12px; border: 1px solid var(--border); 
             border-radius: 6px; box-sizing: border-box; font-size: 15px;
-            background-color: var(--bg-light);
+            background-color: var(--bg-light); font-family: 'Inter', sans-serif;
         }
 
         .match-setup { 
@@ -56,6 +92,7 @@
         .btn-primary { 
             background: var(--primary); color: white; border: none; padding: 14px; 
             border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; 
+            font-family: 'Inter', sans-serif; font-size: 16px;
         }
         
         .spacer { margin-top: 10px; }
@@ -82,10 +119,14 @@
         .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+        /* Mobile Layout */
         @media (max-width: 900px) {
-            .layout-wrapper { flex-direction: column; }
+            .layout-wrapper { flex-direction: column-reverse; } /* Puts right-side content on top */
             .brand-side { width: 100%; height: auto; position: relative; padding: 40px 20px; }
             .content-side { width: 100%; margin-left: 0; padding: 30px 20px; }
+            
+            .brand-logo-white { display: none; } /* Hide white logo on mobile */
+            .mobile-logo { display: block; max-width: 200px; margin-bottom: 25px; } /* Show blue logo on top */
         }
     </style>
 </head>
@@ -100,23 +141,41 @@
         <div style="font-size: 50px; color: var(--accent);">✔</div>
         <h3>Success!</h3>
         <p>Data recorded successfully.</p>
+        <!-- Updated Success Message line with Logo -->
+        <div style="margin-top: 20px; font-size: 14px; color: #475569; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            Remember to record on
+            <img src="https://misse-a.github.io/Office-sports-KE/Logo_inline_purple.svg" alt="United Heroes" style="max-height: 25px;">
+        </div>
     </div>
 </div>
 
 <div class="layout-wrapper">
+    <!-- Left Side Content -->
     <div class="brand-side">
-        <img src="https://contents.mediadecathlon.com/b101216/k$8846f6a168e79c85734dad3defd320ac/defaut.svg?format=auto" alt="Logo" class="brand-logo">
+        <!-- White Logo (Hidden on mobile) -->
+        <img src="https://misse-a.github.io/Office-sports/DECATHLON logo lockup primary white rgb --- Expires on 31-12-2100.svg" alt="Decathlon Logo" class="brand-logo-white">
         <div class="brand-text">Bring people <strong>together</strong> through sport to make <em>wellbeing</em> accessible for <strong>all</strong></div>
     </div>
 
+    <!-- Right Side Content -->
     <div class="content-side">
+        <!-- Blue Logo (Visible ONLY on mobile, right above the content) -->
+        <img src="https://misse-a.github.io/Office-sports-KE/DECATHLON logo lockup primary blue RGB --- Expires on 31-12-2100 (2).svg" alt="Decathlon Logo" class="mobile-logo">
+
+        <!-- Title and Flag -->
+        <div class="content-header">
+            <h1>Team Office Tournament</h1>
+            <img src="https://misse-a.github.io/Office-sports-KE/svgviewer-output.svg" alt="Kenya Flag" class="flag-icon">
+        </div>
+
+        <!-- Updated Menu -->
         <div class="nav-menu">
-            <div class="nav-item active" id="btn-record" onclick="showView('record')">Record Data</div>
-            <div class="nav-item" id="btn-points" onclick="showView('points')">View Points</div>
+            <div class="nav-item active" id="btn-record" onclick="showView('record')">Record Scores</div>
+            <div class="nav-item" id="btn-points" onclick="showView('points')">Ranking</div>
+            <div class="nav-item" id="btn-faqs" onclick="showView('faqs')">FAQs</div>
         </div>
 
         <div id="view-record" class="view-container">
-            <h2>Enter Match Results</h2>
             <form id="tournamentForm">
                 <div class="form-group">
                     <label>Sport</label>
@@ -188,7 +247,6 @@
         </div>
 
         <div id="view-points" class="view-container hidden" style="max-width: 100%;">
-            <h2>Leaderboard Rankings</h2>
             <div class="leaderboard-card">
                 <table class="rank-table">
                     <thead>
@@ -198,6 +256,15 @@
                 </table>
             </div>
         </div>
+
+        <!-- Added FAQs view to support the new menu tab -->
+        <div id="view-faqs" class="view-container hidden">
+            <div class="leaderboard-card" style="padding: 30px; background: #fff;">
+                <h3 style="margin-top:0;">Frequently Asked Questions</h3>
+                <p style="color: #475569;">Check back soon for tournament rules, scoring details, and general FAQs.</p>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -209,8 +276,12 @@
     function showView(viewName) {
         document.getElementById('view-record').classList.toggle('hidden', viewName !== 'record');
         document.getElementById('view-points').classList.toggle('hidden', viewName !== 'points');
+        document.getElementById('view-faqs').classList.toggle('hidden', viewName !== 'faqs'); // Added FAQ toggle logic
+        
         document.getElementById('btn-record').classList.toggle('active', viewName === 'record');
         document.getElementById('btn-points').classList.toggle('active', viewName === 'points');
+        document.getElementById('btn-faqs').classList.toggle('active', viewName === 'faqs'); // Added FAQ toggle logic
+        
         if(viewName === 'points') fetchLeaderboard();
     }
 
