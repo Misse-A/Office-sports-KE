@@ -189,12 +189,12 @@
         </div>
 
         <div class="nav-menu">
-            <div class="nav-item active" id="btn-record" onclick="showView('record')">Record Scores</div>
-            <div class="nav-item" id="btn-points" onclick="showView('points')">Ranking</div>
+            <div class="nav-item active" id="btn-points" onclick="showView('points')">Ranking</div>
+            <div class="nav-item" id="btn-record" onclick="showView('record')">Record Scores</div>
             <div class="nav-item" id="btn-faqs" onclick="showView('faqs')">Instructions</div>
         </div>
 
-        <div id="view-record" class="view-container">
+        <div id="view-record" class="view-container hidden">
             <form id="tournamentForm">
                 <div class="form-group">
                     <label>Sport</label>
@@ -313,7 +313,7 @@
 </div>
 <script>
    
-const API_URL = "https://script.google.com/macros/s/AKfycbytFj3BoWJaxKHs3zTtx4-UPdmg3aYLeCeV0Z95BVGx_hEbNY-rHmAhGNMkHaJpA04ICQ/exec"; // Replace with your Web App URL
+const API_URL = "https://script.google.com/macros/s/AKfycbytFj3BoWJaxKHs3zTtx4-UPdmg3aYLeCeV0Z95BVGx_hEbNY-rHmAhGNMkHaJpA04ICQ/exec"; 
 let allData = [];
 let filteredData = [];
 let currentPage = 1;
@@ -324,7 +324,6 @@ async function updateLeaderboard() {
     const tbody = document.getElementById('leaderboardBody');
     const updateLabel = document.getElementById('lastUpdated');
     
-    // Initial loading state
     if (allData.length === 0) {
         tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px;">Fetching Data...</td></tr>';
     }
@@ -333,16 +332,19 @@ async function updateLeaderboard() {
         const response = await fetch(API_URL);
         const data = await response.json();
         
-        // Update global variables
         allData = data;
-        
-        // Re-apply current search filter if user is typing
         applyFilter(); 
         
-        // Update the timestamp
+        // Update the timestamp with full date format
         const now = new Date();
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const day = now.getDate();
+        const month = months[now.getMonth()];
+        const year = String(now.getFullYear()).slice(-2);
+        const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase();
+        
         if (updateLabel) {
-            updateLabel.innerText = `Updated: ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+            updateLabel.innerText = `Updated: ${day} ${month} ${year} ${time}`;
         }
     } catch (error) {
         console.error("Fetch error:", error);
@@ -359,7 +361,6 @@ function applyFilter() {
         player.name.toLowerCase().includes(searchTerm)
     );
     
-    // Safety check: if search makes current page invalid, reset to 1
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
     if (currentPage > totalPages) currentPage = 1;
     
@@ -375,12 +376,10 @@ function displayData() {
     const end = start + rowsPerPage;
     const paginatedItems = filteredData.slice(start, end);
 
-    // Build Table Rows
     paginatedItems.forEach(player => {
         let rankDisplay = player.rank;
         let badgeClass = '';
         
-        // Apply medals for top 3
         if (player.rank === 1) { badgeClass = 'gold'; rankDisplay = '🥇'; }
         else if (player.rank === 2) { badgeClass = 'silver'; rankDisplay = '🥈'; }
         else if (player.rank === 3) { badgeClass = 'bronze'; rankDisplay = '🥉'; }
@@ -395,7 +394,6 @@ function displayData() {
         `;
     });
 
-    // Update Result Text (Right Side)
     const resultsCountText = document.getElementById('resultsCount');
     if (resultsCountText) {
         resultsCountText.innerText = `Showing ${paginatedItems.length} of ${filteredData.length} results`;
@@ -404,13 +402,12 @@ function displayData() {
     renderPagination();
 }
 
-// 5. RENDER NUMBERED BUTTONS (Matches image_46fcb8.png)
+// 5. RENDER NUMBERED BUTTONS
 function renderPagination() {
     const container = document.getElementById('paginationButtons');
     const totalPages = Math.ceil(filteredData.length / rowsPerPage) || 1;
     container.innerHTML = '';
 
-    // Previous Arrow
     const prevBtn = document.createElement('button');
     prevBtn.innerHTML = '❮';
     prevBtn.className = 'page-node';
@@ -418,7 +415,6 @@ function renderPagination() {
     prevBtn.onclick = () => { currentPage--; displayData(); };
     container.appendChild(prevBtn);
 
-    // Numbered Buttons
     for (let i = 1; i <= totalPages; i++) {
         const pageBtn = document.createElement('button');
         pageBtn.innerText = i;
@@ -430,7 +426,6 @@ function renderPagination() {
         container.appendChild(pageBtn);
     }
 
-    // Next Arrow
     const nextBtn = document.createElement('button');
     nextBtn.innerHTML = '❯';
     nextBtn.className = 'page-node';
@@ -442,18 +437,21 @@ function renderPagination() {
 // 6. INITIALIZE
 document.addEventListener('DOMContentLoaded', () => {
     updateLeaderboard();
-    setInterval(updateLeaderboard, 60000); // Auto-refresh every 1 minute
+    setInterval(updateLeaderboard, 60000); 
 });
 
-// Link the search input to the filter function
 function filterData() {
     applyFilter();
 }
 </script>
 <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw9EreBu9N-tlZsnvay4usP1OdTHAy-c2g7tOH-ztVTBZ0Sg2AcWMXCmt0yjoUqZF-OjQ/exec"; 
-    const players = ["Michael", "Samson", "Martha", "Adele"];
-    
+    const players = [
+    "Adele W", "Albert M", "Allan M", "Come D", "Dennis K", 
+    "Edwin A", "Eric N", "Joseph N", "Juliet N", "Kyalo M", 
+    "Martha A", "Mary W", "Michael M", "Naomi M", "Olivier D", 
+    "Peina J", "Romain F", "Samson O", "Wandera B", "Weldon C"
+];
     function showView(viewName) {
         document.getElementById('view-record').classList.toggle('hidden', viewName !== 'record');
         document.getElementById('view-points').classList.toggle('hidden', viewName !== 'points');
