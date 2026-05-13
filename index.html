@@ -6,10 +6,8 @@
     <meta name="description" content="Lets play sports together and be active. Team #zoea zoezi.">
     <title>Office Tournament | Decathlon Service Team</title>
     
-    <!-- Favicon -->
     <link rel="icon" href="https://misse-a.github.io/Office-sports-KE/icon.png" type="image/png">
     
-    <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -32,7 +30,6 @@
         
         .layout-wrapper { display: flex; min-height: 100vh; width: 100%; }
 
-        /* Left Side: Exactly 50% */
         .brand-side {
             background-color: var(--primary); 
             width: 50%; 
@@ -44,7 +41,6 @@
         .brand-logo-white { max-width: 250px; margin-bottom: 40px; }
         .brand-text { font-size: 1.8rem; font-weight: 300; max-width: 350px; line-height: 1.4; }
 
-        /* Right Side: Exactly 50% */
         .content-side { 
             margin-left: 50%; 
             width: 50%; 
@@ -54,9 +50,8 @@
             box-sizing: border-box; 
         }
 
-        .mobile-logo { display: none; } /* Hidden on desktop */
+        .mobile-logo { display: none; }
 
-        /* Header Area with Flag */
         .content-header {
             display: flex; align-items: center; gap: 15px; margin-bottom: 25px;
         }
@@ -65,7 +60,6 @@
         }
         .flag-icon { width: 35px; height: auto; }
 
-        /* Navigation */
         .nav-menu { display: flex; gap: 30px; border-bottom: 2px solid #f1f5f9; margin-bottom: 40px; }
         .nav-item { 
             padding-bottom: 12px; cursor: pointer; font-weight: bold; 
@@ -98,18 +92,52 @@
         .spacer { margin-top: 10px; }
         .hidden { display: none !important; }
 
-        .leaderboard-card { width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid #f1f5f9; }
-        .rank-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .rank-table th { background: #f8fafc; padding: 16px; color: #64748b; font-size: 12px; text-transform: uppercase; }
-        .rank-table td { padding: 16px; border-top: 1px solid #f1f5f9; }
-        
-        .rank-circle { 
-            display: inline-block; width: 28px; height: 28px; line-height: 28px; 
-            text-align: center; border-radius: 50%; background: #e2e8f0; font-weight: bold; font-size: 12px;
-        }
-        .gold { background: #fef3c7; color: #d97706; }
-        .silver { background: #f1f5f9; color: #475569; }
-        .bronze { background: #ffedd5; color: #9a3412; }
+        /* Container & Table */
+.leaderboard-card { 
+    width: 100%; 
+    border-radius: 12px; 
+    overflow: hidden; 
+    border: 1px solid #f1f5f9; 
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+}
+
+.rank-table { width: 100%; border-collapse: collapse; text-align: left; background: white; }
+
+.rank-table th { 
+    background: #f8fafc; 
+    padding: 16px; 
+    color: #64748b; 
+    font-size: 12px; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em;
+}
+
+.rank-table td { padding: 16px; border-top: 1px solid #f1f5f9; color: #334155; }
+
+/* The Rank Circles (Badges) */
+.rank-circle { 
+    display: inline-block; 
+    width: 32px; 
+    height: 32px; 
+    line-height: 32px; 
+    text-align: center; 
+    border-radius: 50%; 
+    background: #f1f5f9; 
+    font-weight: 800; 
+    font-size: 13px;
+}
+
+/* Badge Colors */
+.gold { background: #fef3c7; color: #d97706; border: 1px solid #fcd34d; }
+.silver { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+.bronze { background: #ffedd5; color: #9a3412; border: 1px solid #fdba74; }
+
+/* Text Styling */
+.player-name { font-weight: 600; color: #1e293b; }
+.points-val { font-weight: 700; color: #0f172a; }
+
+/* Subtle Hover Effect */
+.rank-table tr:hover { background-color: #f8fafc; transition: 0.2s ease; }
 
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -119,14 +147,12 @@
         .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Mobile Layout */
         @media (max-width: 900px) {
-            .layout-wrapper { flex-direction: column-reverse; } /* Puts right-side content on top */
+            .layout-wrapper { flex-direction: column-reverse; }
             .brand-side { width: 100%; height: auto; position: relative; padding: 40px 20px; }
             .content-side { width: 100%; margin-left: 0; padding: 30px 20px; }
-            
-            .brand-logo-white { display: none; } /* Hide white logo on mobile */
-            .mobile-logo { display: block; max-width: 200px; margin-bottom: 25px; } /* Show blue logo on top */
+            .brand-logo-white { display: none; }
+            .mobile-logo { display: block; max-width: 200px; margin-bottom: 25px; }
         }
     </style>
 </head>
@@ -239,16 +265,35 @@
             </form>
         </div>
 
-        <div id="view-points" class="view-container hidden" style="max-width: 100%;">
-            <div class="leaderboard-card">
-                <table class="rank-table">
-                    <thead>
-                        <tr><th>Rank</th><th>Name</th><th>Points</th><th>Matches</th></tr>
-                    </thead>
-                    <tbody id="leaderboardBody"></tbody>
-                </table>
-            </div>
-        </div>
+      <div id="view-points" class="view-container" style="max-width: 100%;">
+    <div class="leaderboard-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <input type="text" id="nameSearch" placeholder="Search by name..." onkeyup="filterData()" style="padding: 8px 12px; border-radius: 6px; border: 1px solid #cbd5e1; width: 250px;">
+        <span id="lastUpdated" style="font-size: 12px; color: #64748b;"></span>
+    </div>
+
+    <div class="leaderboard-card">
+        <table class="rank-table">
+            <thead>
+                <tr><th>Rank</th><th>Name</th><th>Points</th><th>Matches</th></tr>
+            </thead>
+            <tbody id="leaderboardBody">
+                <tr><td colspan="4" style="text-align:center; padding:20px;">Fetching Data...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination-wrapper" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+    <!-- Left Side: Numbered Pagination -->
+    <div id="paginationButtons" class="pagination-container">
+        <!-- JS will inject buttons here -->
+    </div>
+
+    <!-- Right Side: Results Text -->
+    <div id="resultsCount" style="font-size: 13px; color: #64748b; font-weight: 500;">
+        Showing 0 of 0 results
+    </div>
+</div>
+</div>
 
         <div id="view-faqs" class="view-container hidden">
             <div class="leaderboard-card" style="padding: 30px; background: #fff;">
@@ -262,15 +307,151 @@
                 <p style="color: #475569;">Pickleball Singles Winner gets 3 points and participant 1 point. Doubles Winners 6 and losers 2. The Idea is to play as a team</p>
                 <p style="color: #475569;">Any individual sports gets you 2 points and group sport activities gets you 3 points</p>
                 <p style="color: #475569;">For running you must complete 5km and for cycling you must complete 10km for the points to be valid</p>
-                
             </div>
         </div>
-
     </div>
 </div>
-
 <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxd246IEL-xdCym97KCzx1aA__0O8fYAMbEkhld1wp0HQzChYZ8SOOBFpPn5DFmpLBK7w/exec"; 
+   
+const API_URL = "https://script.google.com/macros/s/AKfycbytFj3BoWJaxKHs3zTtx4-UPdmg3aYLeCeV0Z95BVGx_hEbNY-rHmAhGNMkHaJpA04ICQ/exec"; // Replace with your Web App URL
+let allData = [];
+let filteredData = [];
+let currentPage = 1;
+const rowsPerPage = 10;
+
+// 2. MAIN DATA FETCHING
+async function updateLeaderboard() {
+    const tbody = document.getElementById('leaderboardBody');
+    const updateLabel = document.getElementById('lastUpdated');
+    
+    // Initial loading state
+    if (allData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px;">Fetching Data...</td></tr>';
+    }
+
+    try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        
+        // Update global variables
+        allData = data;
+        
+        // Re-apply current search filter if user is typing
+        applyFilter(); 
+        
+        // Update the timestamp
+        const now = new Date();
+        if (updateLabel) {
+            updateLabel.innerText = `Updated: ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+        }
+    } catch (error) {
+        console.error("Fetch error:", error);
+        if (allData.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px; color: red;">Failed to load data.</td></tr>';
+        }
+    }
+}
+
+// 3. FILTERING LOGIC
+function applyFilter() {
+    const searchTerm = document.getElementById('nameSearch').value.toLowerCase();
+    filteredData = allData.filter(player => 
+        player.name.toLowerCase().includes(searchTerm)
+    );
+    
+    // Safety check: if search makes current page invalid, reset to 1
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    if (currentPage > totalPages) currentPage = 1;
+    
+    displayData();
+}
+
+// 4. DISPLAY & PAGINATION LOGIC
+function displayData() {
+    const tbody = document.getElementById('leaderboardBody');
+    tbody.innerHTML = '';
+
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedItems = filteredData.slice(start, end);
+
+    // Build Table Rows
+    paginatedItems.forEach(player => {
+        let rankDisplay = player.rank;
+        let badgeClass = '';
+        
+        // Apply medals for top 3
+        if (player.rank === 1) { badgeClass = 'gold'; rankDisplay = '🥇'; }
+        else if (player.rank === 2) { badgeClass = 'silver'; rankDisplay = '🥈'; }
+        else if (player.rank === 3) { badgeClass = 'bronze'; rankDisplay = '🥉'; }
+
+        tbody.innerHTML += `
+            <tr>
+                <td><span class="rank-circle ${badgeClass}">${rankDisplay}</span></td>
+                <td class="player-name">${player.name}</td>
+                <td class="points-val">${player.points}</td>
+                <td>${player.matches}</td>
+            </tr>
+        `;
+    });
+
+    // Update Result Text (Right Side)
+    const resultsCountText = document.getElementById('resultsCount');
+    if (resultsCountText) {
+        resultsCountText.innerText = `Showing ${paginatedItems.length} of ${filteredData.length} results`;
+    }
+
+    renderPagination();
+}
+
+// 5. RENDER NUMBERED BUTTONS (Matches image_46fcb8.png)
+function renderPagination() {
+    const container = document.getElementById('paginationButtons');
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage) || 1;
+    container.innerHTML = '';
+
+    // Previous Arrow
+    const prevBtn = document.createElement('button');
+    prevBtn.innerHTML = '❮';
+    prevBtn.className = 'page-node';
+    prevBtn.disabled = (currentPage === 1);
+    prevBtn.onclick = () => { currentPage--; displayData(); };
+    container.appendChild(prevBtn);
+
+    // Numbered Buttons
+    for (let i = 1; i <= totalPages; i++) {
+        const pageBtn = document.createElement('button');
+        pageBtn.innerText = i;
+        pageBtn.className = `page-node ${i === currentPage ? 'active' : ''}`;
+        pageBtn.onclick = () => { 
+            currentPage = i; 
+            displayData(); 
+        };
+        container.appendChild(pageBtn);
+    }
+
+    // Next Arrow
+    const nextBtn = document.createElement('button');
+    nextBtn.innerHTML = '❯';
+    nextBtn.className = 'page-node';
+    nextBtn.disabled = (currentPage === totalPages);
+    nextBtn.onclick = () => { currentPage++; displayData(); };
+    container.appendChild(nextBtn);
+}
+
+// 6. INITIALIZE
+document.addEventListener('DOMContentLoaded', () => {
+    updateLeaderboard();
+    setInterval(updateLeaderboard, 60000); // Auto-refresh every 1 minute
+});
+
+// Link the search input to the filter function
+function filterData() {
+    applyFilter();
+}
+</script>
+<script>
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw9EreBu9N-tlZsnvay4usP1OdTHAy-c2g7tOH-ztVTBZ0Sg2AcWMXCmt0yjoUqZF-OjQ/exec"; 
     const players = ["Michael", "Samson", "Martha", "Adele"];
     
     function showView(viewName) {
@@ -281,43 +462,8 @@
         document.getElementById('btn-record').classList.toggle('active', viewName === 'record');
         document.getElementById('btn-points').classList.toggle('active', viewName === 'points');
         document.getElementById('btn-faqs').classList.toggle('active', viewName === 'faqs');
-        
-        if(viewName === 'points') fetchLeaderboard();
     }
 
-    /**
-     * FIX: Uses standard fetch() to get leaderboard data, bypassing the need for google.script.run
-     */
-    async function fetchLeaderboard() {
-        const body = document.getElementById('leaderboardBody');
-        body.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px;">Fetching rankings...</td></tr>';
-        
-        try {
-            // Append a query parameter so your Apps Script knows it's a read request
-            const response = await fetch(APPS_SCRIPT_URL + "?action=getLeaderboard");
-            const res = await response.json();
-
-            if (res.status === "success") {
-                if (!res.data || res.data.length === 0) {
-                    body.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px;">No data recorded yet.</td></tr>';
-                    return;
-                }
-                body.innerHTML = res.data.map((row, i) => `
-                    <tr>
-                        <td><span class="rank-circle ${i==0?'gold':i==1?'silver':i==2?'bronze':''}">${i+1}</span></td>
-                        <td><strong>${row.name}</strong></td>
-                        <td>${row.points}</td>
-                        <td>${row.matches}</td>
-                    </tr>`).join('');
-            } else {
-                body.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">' + (res.message || "Unknown Error") + '</td></tr>';
-            }
-        } catch (err) {
-            body.innerHTML = `<tr><td colspan="4" style="text-align:center; color:red;">Server Error: Ensure your Apps Script 'doGet' function is set up and returning JSON. (${err.message})</td></tr>`;
-        }
-    }
-
-    // Initialization Logic
     const initSelect = (sel) => {
         sel.innerHTML = '<option value="">Select Player...</option>' + players.map(p => `<option value="${p}">${p}</option>`).join('');
         sel.addEventListener('change', updatePlayerOptions);
