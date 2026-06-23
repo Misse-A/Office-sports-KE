@@ -92,52 +92,47 @@
         .spacer { margin-top: 10px; }
         .hidden { display: none !important; }
 
-        /* Container & Table */
-.leaderboard-card { 
-    width: 100%; 
-    border-radius: 12px; 
-    overflow: hidden; 
-    border: 1px solid #f1f5f9; 
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
-}
+        .leaderboard-card { 
+            width: 100%; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            border: 1px solid #f1f5f9; 
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+        }
 
-.rank-table { width: 100%; border-collapse: collapse; text-align: left; background: white; }
+        .rank-table { width: 100%; border-collapse: collapse; text-align: left; background: white; }
 
-.rank-table th { 
-    background: #f8fafc; 
-    padding: 16px; 
-    color: #64748b; 
-    font-size: 12px; 
-    text-transform: uppercase; 
-    letter-spacing: 0.05em;
-}
+        .rank-table th { 
+            background: #f8fafc; 
+            padding: 16px; 
+            color: #64748b; 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em;
+        }
 
-.rank-table td { padding: 16px; border-top: 1px solid #f1f5f9; color: #334155; }
+        .rank-table td { padding: 16px; border-top: 1px solid #f1f5f9; color: #334155; }
 
-/* The Rank Circles (Badges) */
-.rank-circle { 
-    display: inline-block; 
-    width: 32px; 
-    height: 32px; 
-    line-height: 32px; 
-    text-align: center; 
-    border-radius: 50%; 
-    background: #f1f5f9; 
-    font-weight: 800; 
-    font-size: 13px;
-}
+        .rank-circle { 
+            display: inline-block; 
+            width: 32px; 
+            height: 32px; 
+            line-height: 32px; 
+            text-align: center; 
+            border-radius: 50%; 
+            background: #f1f5f9; 
+            font-weight: 800; 
+            font-size: 13px;
+        }
 
-/* Badge Colors */
-.gold { background: #fef3c7; color: #d97706; border: 1px solid #fcd34d; }
-.silver { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
-.bronze { background: #ffedd5; color: #9a3412; border: 1px solid #fdba74; }
+        .gold { background: #fef3c7; color: #d97706; border: 1px solid #fcd34d; }
+        .silver { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+        .bronze { background: #ffedd5; color: #9a3412; border: 1px solid #fdba74; }
 
-/* Text Styling */
-.player-name { font-weight: 600; color: #1e293b; }
-.points-val { font-weight: 700; color: #0f172a; }
+        .player-name { font-weight: 600; color: #1e293b; }
+        .points-val { font-weight: 700; color: #0f172a; }
 
-/* Subtle Hover Effect */
-.rank-table tr:hover { background-color: #f8fafc; transition: 0.2s ease; }
+        .rank-table tr:hover { background-color: #f8fafc; transition: 0.2s ease; }
 
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -265,35 +260,30 @@
             </form>
         </div>
 
-      <div id="view-points" class="view-container" style="max-width: 100%;">
-    <div class="leaderboard-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <input type="text" id="nameSearch" placeholder="Search by name..." onkeyup="filterData()" style="padding: 8px 12px; border-radius: 6px; border: 1px solid #cbd5e1; width: 250px;">
-        <span id="lastUpdated" style="font-size: 12px; color: #64748b;"></span>
-    </div>
+        <div id="view-points" class="view-container" style="max-width: 100%;">
+            <div class="leaderboard-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <input type="text" id="nameSearch" placeholder="Search by name..." onkeyup="filterData()" style="padding: 8px 12px; border-radius: 6px; border: 1px solid #cbd5e1; width: 250px;">
+                <span id="lastUpdated" style="font-size: 12px; color: #64748b;"></span>
+            </div>
 
-    <div class="leaderboard-card">
-        <table class="rank-table">
-            <thead>
-                <tr><th>Rank</th><th>Name</th><th>Points</th><th>Matches</th></tr>
-            </thead>
-            <tbody id="leaderboardBody">
-                <tr><td colspan="4" style="text-align:center; padding:20px;">Fetching Data...</td></tr>
-            </tbody>
-        </table>
-    </div>
+            <div class="leaderboard-card">
+                <table class="rank-table">
+                    <thead>
+                        <tr><th>Rank</th><th>Name</th><th>Points</th><th>Matches</th></tr>
+                    </thead>
+                    <tbody id="leaderboardBody">
+                        <tr><td colspan="4" style="text-align:center; padding:20px;">Fetching Data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-    <div class="pagination-wrapper" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
-    <!-- Left Side: Numbered Pagination -->
-    <div id="paginationButtons" class="pagination-container">
-        <!-- JS will inject buttons here -->
-    </div>
-
-    <!-- Right Side: Results Text -->
-    <div id="resultsCount" style="font-size: 13px; color: #64748b; font-weight: 500;">
-        Showing 0 of 0 results
-    </div>
-</div>
-</div>
+            <div class="pagination-wrapper" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <div id="paginationButtons" class="pagination-container"></div>
+                <div id="resultsCount" style="font-size: 13px; color: #64748b; font-weight: 500;">
+                    Showing 0 of 0 results
+                </div>
+            </div>
+        </div>
 
         <div id="view-faqs" class="view-container hidden">
             <div class="leaderboard-card" style="padding: 30px; background: #fff;">
@@ -304,22 +294,20 @@
                 <p style="color: #475569;">Pickleball is the main even, and NPS venue is available on Tuesday and Friday for free use. Any other location and event will be paid by individuals participarting</p>
                 <p style="color: #475569;">To play for the countey, remember to record on the United Hero App as well. You can automate by connecting to third party apps. However for pickleball can only be recorded as padel</p>
                 <h3 style="margin-top:0;">How the points work</h3>
-                <p style="color: #475569;">Pickleball Singles Winner gets 3 points and participant 1 point. Doubles Winners 6 and losers 2. The Idea is to play as a team</p>
-                <p style="color: #475569;">Any individual sports gets you 2 points and group sport activities gets you 3 points</p>
-                <p style="color: #475569;">For running you must complete 5km and for cycling you must complete 10km for the points to be valid</p>
+                <p style="color: #475569;">Pickleball Singles Winner gets 6 points and participant 3 points. Doubles Winners 6 and losers 2.</p>
+                <p style="color: #475569;">Any other individual sports gets you 2 points, and group sport activities gets everyone participating 3 points.</p>
             </div>
         </div>
     </div>
 </div>
+
 <script>
-   
 const API_URL = "https://script.google.com/macros/s/AKfycbytFj3BoWJaxKHs3zTtx4-UPdmg3aYLeCeV0Z95BVGx_hEbNY-rHmAhGNMkHaJpA04ICQ/exec"; 
 let allData = [];
 let filteredData = [];
 let currentPage = 1;
 const rowsPerPage = 10;
 
-// 2. MAIN DATA FETCHING
 async function updateLeaderboard() {
     const tbody = document.getElementById('leaderboardBody');
     const updateLabel = document.getElementById('lastUpdated');
@@ -335,7 +323,6 @@ async function updateLeaderboard() {
         allData = data;
         applyFilter(); 
         
-        // Update the timestamp with full date format
         const now = new Date();
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const day = now.getDate();
@@ -354,7 +341,6 @@ async function updateLeaderboard() {
     }
 }
 
-// 3. FILTERING LOGIC
 function applyFilter() {
     const searchTerm = document.getElementById('nameSearch').value.toLowerCase();
     filteredData = allData.filter(player => 
@@ -367,7 +353,6 @@ function applyFilter() {
     displayData();
 }
 
-// 4. DISPLAY & PAGINATION LOGIC
 function displayData() {
     const tbody = document.getElementById('leaderboardBody');
     tbody.innerHTML = '';
@@ -402,7 +387,6 @@ function displayData() {
     renderPagination();
 }
 
-// 5. RENDER NUMBERED BUTTONS
 function renderPagination() {
     const container = document.getElementById('paginationButtons');
     const totalPages = Math.ceil(filteredData.length / rowsPerPage) || 1;
@@ -434,7 +418,6 @@ function renderPagination() {
     container.appendChild(nextBtn);
 }
 
-// 6. INITIALIZE
 document.addEventListener('DOMContentLoaded', () => {
     updateLeaderboard();
     setInterval(updateLeaderboard, 60000); 
@@ -444,14 +427,16 @@ function filterData() {
     applyFilter();
 }
 </script>
+
 <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw9EreBu9N-tlZsnvay4usP1OdTHAy-c2g7tOH-ztVTBZ0Sg2AcWMXCmt0yjoUqZF-OjQ/exec"; 
     const players = [
-    "Adele W", "Albert M", "Allan M", "Come D", "Dennis K", 
-    "Edwin A", "Eric N", "Joseph N", "Juliet N", "Kyalo M", 
-    "Martha A", "Mary W", "Michael M", "Naomi M", "Olivier D", 
-    "Peina J", "Romain F", "Samson O", "Wandera B", "Weldon C"
-];
+        "Adele W", "Albert M", "Allan M", "Come D", "Dennis K", 
+        "Edwin A", "Eric N", "Joseph N", "Juliet N", "Kyalo M", 
+        "Mary W",  "Naomi M", "Olivier D", 
+        "Peina J", "Romain F", "Samson O", "Wandera B", "Weldon C"
+    ];
+
     function showView(viewName) {
         document.getElementById('view-record').classList.toggle('hidden', viewName !== 'record');
         document.getElementById('view-points').classList.toggle('hidden', viewName !== 'points');
@@ -568,45 +553,12 @@ function filterData() {
             payload.Player1 = document.getElementById('p1').value;
             payload.Player3 = document.getElementById('p3').value;
             let s1 = parseInt(payload.ScoreTeam1), s2 = parseInt(payload.ScoreTeam2);
-            let win = (t === 'Doubles' ? 6 : 3), lose = (t === 'Doubles' ? 2 : 1);
-            pts[payload.Player1] = s1 > s2 ? win : lose;
-            pts[payload.Player3] = s2 > s1 ? win : lose;
-            if(t === 'Doubles') {
-                payload.Player2 = document.getElementById('p2').value;
-                payload.Player4 = document.getElementById('p4').value;
-                pts[payload.Player2] = pts[payload.Player1];
-                pts[payload.Player4] = pts[payload.Player3];
-            }
-        } else {
-            const sels = Array.from(document.querySelectorAll('.group-select')).filter(el => el.value);
-            let pVal = (s === 'Running' || s === 'Cycling') ? (t === 'Individual' ? 2 : 4) : (t === 'Individual' ? 2 : 3);
-            sels.forEach((sel, i) => {
-                pts[sel.value] = pVal;
-                if(i===0) payload.Player1 = sel.value;
-                else if(i===1) payload.Player2 = sel.value;
-                else if(i===2) payload.Player3 = sel.value;
-                else if(i===3) payload.Player4 = sel.value;
-            });
-        }
-
-        payload.PointsDistributed = Object.entries(pts).map(([n, p]) => `${n}: ${p}`).join(" | ");
-        payload.picture1Base64 = await getBase64(document.getElementById('pic1').files[0]);
-
-        try {
-            const response = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
-            const result = await response.json();
-            if(result.status === "success") {
-                document.getElementById('loadingState').classList.add('hidden');
-                document.getElementById('successState').classList.remove('hidden');
-                setTimeout(() => { location.reload(); }, 3000); 
+            
+            // Modified Scoring logic block for Pickleball / Padel
+            let win, lose;
+            if (s === 'Pickleball' && t === 'Singles') {
+                win = 6;
+                lose = 3;
             } else {
-                throw new Error(result.message);
-            }
-        } catch (err) { 
-            alert("Error: " + err.message); 
-            overlay.classList.add('hidden'); 
-        }
-    };
-</script>
-</body>
-</html>
+                // Keep default Doubles points rule or basic Padel configs
+                win = (t
